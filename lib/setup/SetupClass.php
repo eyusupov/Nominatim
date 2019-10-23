@@ -152,7 +152,7 @@ class SetupFunctions
             exit(1);
         }
         $this->pgsqlRunScriptFile(CONST_BasePath.'/data/country_name.sql');
-        $this->pgsqlRunScriptFile(CONST_BasePath.'/data/country_osm_grid.sql.gz');
+        $this->pgsqlRunScriptFile(CONST_ExtraDataPath.'/country_osm_grid.sql.gz');
         $this->pgsqlRunScriptFile(CONST_BasePath.'/data/gb_postcode_table.sql');
 
         $sPostcodeFilename = CONST_BasePath.'/data/gb_postcode_data.sql.gz';
