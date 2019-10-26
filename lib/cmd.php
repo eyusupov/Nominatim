@@ -161,6 +161,8 @@ function runSQLScript($sScript, $bfatal = true, $bVerbose = false, $bIgnoreError
     }
     if (!$bVerbose) {
         $sCMD .= ' -q';
+    } else {
+        $sCmd .= ' -a';
     }
     if ($bfatal && !$bIgnoreErrors) {
         $sCMD .= ' -v ON_ERROR_STOP=1';

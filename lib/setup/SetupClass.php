@@ -813,6 +813,8 @@ class SetupFunctions
         $sCMD = 'psql -p '.$this->aDSNInfo['port'].' -d '.$this->aDSNInfo['database'];
         if (!$this->bVerbose) {
             $sCMD .= ' -q';
+        } else {
+            $sCMD .= ' -a';
         }
         if (isset($this->aDSNInfo['hostspec'])) {
             $sCMD .= ' -h '.$this->aDSNInfo['hostspec'];
