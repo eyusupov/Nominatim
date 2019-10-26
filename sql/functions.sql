@@ -1380,7 +1380,7 @@ BEGIN
     -- see if we can get it from a surrounding building
     IF NEW.osm_type = 'N' AND addr_street IS NULL AND addr_place IS NULL
        AND NEW.housenumber IS NULL THEN
-      FOR location IN select address from placex where ST_Covers(geometry, place_centroid)
+      FOR location IN select osm_type, osm_id, address from placex where ST_Covers(geometry, place_centroid)
             and address is not null
             and (address ? 'housenumber' or address ? 'street' or address ? 'place')
             and rank_search > 28 AND ST_GeometryType(geometry) in ('ST_Polygon','ST_MultiPolygon')
