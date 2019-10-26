@@ -604,6 +604,10 @@ class SetupFunctions
             $sBaseCmd .= ' -U '.$this->aDSNInfo['username'];
         }
 
+        if ($this->bVerbose) {
+            $sBaseCmd .= ' -v';
+        }
+
         info('Index ranks 0 - 4');
         $iStatus = $this->runWithPgEnv($sBaseCmd.' -R 4');
         if ($iStatus != 0) {
