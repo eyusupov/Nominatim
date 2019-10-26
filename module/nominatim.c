@@ -52,6 +52,7 @@ transliteration( PG_FUNCTION_ARGS )
 
 	// Intermediate wchar version of string
 	wchardatastart = wchardata = (unsigned int *)palloc((sourcedatalength+1)*sizeof(int));
+	if (wchardata == NULL) ereport(FATAL, (errmsg("failed to allocate memory for wchardata")));
 
 	// Based on pg_utf2wchar_with_len from wchar.c
 	// Postgresql strings are not zero terminalted
@@ -127,6 +128,7 @@ transliteration( PG_FUNCTION_ARGS )
 
 	// allocate & create the result
 	result = (text *)palloc(resultdatalength + VARHDRSZ);
+	if (result == NULL) ereport(FATAL, (errmsg("failed to allocate memory for result")));
 	SET_VARSIZE(result, resultdatalength + VARHDRSZ);
 	resultdata = (unsigned char *)VARDATA(result);
 
@@ -147,7 +149,6 @@ transliteration( PG_FUNCTION_ARGS )
 		{
 			ereport( WARNING, ( errcode( ERRCODE_SUCCESSFUL_COMPLETION ),
 		              errmsg( "missing char: %i\n", *wchardata )));
-			
 		}*/
 		wchardata++;
 	}
@@ -233,6 +234,7 @@ gettokenstring( PG_FUNCTION_ARGS )
 
 	// Buffer for doing the replace in - string could get slightly longer (double is massive overkill)
 	buffer = (char *)palloc((sourcedatalength*2)*sizeof(char));
+	if (buffer == NULL) ereport(FATAL, (errmsg("failed to allocate memory for buffer")));
 	memcpy(buffer+1, sourcedata, sourcedatalength);
 	buffer[0] = 32;
 	buffer[sourcedatalength+1] = 32;
@@ -281,6 +283,7 @@ gettokenstring( PG_FUNCTION_ARGS )
 	// allocate & create the result
 	len--;// Drop the terminating zero
 	result = (text *)palloc(len + VARHDRSZ);
+	if (result == NULL) ereport(FATAL, (errmsg("failed to allocate memory for result")));
 	SET_VARSIZE(result, len + VARHDRSZ);
 	memcpy(VARDATA(result), buffer, len);
 
