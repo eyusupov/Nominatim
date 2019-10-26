@@ -366,6 +366,9 @@ class SetupFunctions
 
         $sSQL = 'select distinct partition from country_name';
         $aPartitions = $this->oDB->getCol($sSQL);
+        if (count($aPartitions) == 0) {
+            fail("Could not determine partitions");
+        }
 
         if (!$this->bNoPartitions) $aPartitions[] = 0;
         foreach ($aPartitions as $sPartition) {
@@ -796,6 +799,9 @@ class SetupFunctions
     {
         $sSQL = 'select distinct partition from country_name';
         $aPartitions = $this->oDB->getCol($sSQL);
+        if (count($aPartitions) == 0) {
+            fail("Could not determine partitions");
+        }
         if (!$this->bNoPartitions) $aPartitions[] = 0;
 
         preg_match_all('#^-- start(.*?)^-- end#ms', $sTemplate, $aMatches, PREG_SET_ORDER);
